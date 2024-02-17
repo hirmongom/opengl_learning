@@ -17,7 +17,7 @@ size_t *outVerticesSize, size_t *outIndicesSize, unsigned int triangleCount) {
 	(*vertices)[1] = 0;
 	(*vertices)[2] = 0;
 
-	for (int i = 1; i <= triangleCount; i++) {
+	for (unsigned int i = 1; i <= triangleCount; i++) {
 		float currAngle = angle * (i - 1);
 		float x = radius * cos(currAngle);
 		float y = radius * sin(currAngle);
