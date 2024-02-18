@@ -4,8 +4,9 @@
 /**************************************************************************************************/
 const char *vertexShaderSource = "#version 330 core\n"
 	"layout (location = 0) in vec3 position;\n"
+	"uniform mat4 projection;\n"
 	"void main() {\n"
-	"	gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+	"	gl_Position = projection * vec4(position.x, position.y, position.z, 1.0);\n"
 	"}\0";
 
 
@@ -18,7 +19,8 @@ const char *fragmentShaderSource= "#version 330 core\n"
 
 
 /**************************************************************************************************/
-int initShaderProgram(unsigned int *shaderProgram) {
+int initShaderProgram(unsigned int *shaderProgram) 
+{
 	int status;
 	char log[512];
 	unsigned int vertexShader;
@@ -57,6 +59,31 @@ int initShaderProgram(unsigned int *shaderProgram) {
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
+	return 0;
+}
+
+
+/**************************************************************************************************/
+int setupProjectionMatrix(unsigned int shaderProgram, int width, int height) 
+{
+	glUseProgram(shaderProgram);
+	
+	float left = 0.0f;
+	float right = (float)width;
+	float bottom = 0.0f;
+	float top = (float)height;
+
+	// Calculate orthographic projection matrix
+	float projectionMatrix[16] = {
+			2.0f / (right - left), 0.0f, 0.0f, 0.0f,
+			0.0f, 2.0f / (top - bottom), 0.0f, 0.0f,
+			0.0f, 0.0f, -1.0f, 0.0f,
+			-(right + left) / (right - left), -(top + bottom) / (top - bottom), 0.0f, 1.0f
+	};
+
+	int projectionLocation = glGetUniformLocation(shaderProgram, "projection");
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, projectionMatrix);
 
 	return 0;
 }

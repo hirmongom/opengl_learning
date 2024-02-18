@@ -3,8 +3,9 @@
 
 /**************************************************************************************************/
 static int generateCircleVertices(float** vertices, unsigned int **indices, 
-size_t *outVerticesSize, size_t *outIndicesSize, unsigned int triangleCount) {
-	float radius = 0.5f;
+size_t *outVerticesSize, size_t *outIndicesSize, unsigned int triangleCount, 
+unsigned int posX, unsigned int posY, float radius) 
+{
 	float angle = 2 * M_PI / triangleCount;
 
 	*outVerticesSize = (triangleCount + 1) * 3 * sizeof(float);
@@ -13,14 +14,14 @@ size_t *outVerticesSize, size_t *outIndicesSize, unsigned int triangleCount) {
 	*indices = (unsigned int*)malloc(*outIndicesSize);
 
 	/* Center of the Circle */
-	(*vertices)[0] = 0;
-	(*vertices)[1] = 0;
+	(*vertices)[0] = posX;
+	(*vertices)[1] = posY;
 	(*vertices)[2] = 0;
 
 	for (unsigned int i = 1; i <= triangleCount; i++) {
 		float currAngle = angle * (i - 1);
-		float x = radius * cos(currAngle);
-		float y = radius * sin(currAngle);
+		float x = posX + radius * cos(currAngle);
+		float y = posY + radius * sin(currAngle);
 		float z = 0.0f;
 
 		(*vertices)[i * 3] = x;
@@ -36,36 +37,12 @@ size_t *outVerticesSize, size_t *outIndicesSize, unsigned int triangleCount) {
 	return 0;
 }
 
-/**************************************************************************************************/
-int drawTriangle(void) {
-	unsigned int VBO;
-	unsigned int VAO;
-	float vertices[] = {
-		-0.5f,  -0.5f,  0.0f,
-		 0.5f,  -0.5f,  0.0f,
-		 0.0f,   0.5f,  0.0f,
-	};
-
-	glGenBuffers(1, &VBO);
-	glGenVertexArrays(1, &VAO);
-
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindVertexArray(0);
-
-	return 0;
-}
-
 
 /**************************************************************************************************/
-int drawCircle(unsigned int shaderProgram, unsigned int numTriangles, unsigned int wireframe) {
+int drawCircle(unsigned int shaderProgram, unsigned int numTriangles, 
+unsigned int posX, unsigned int posY, float radius, 
+unsigned int wireframe) 
+{
 	unsigned int VAO, VBO, EBO;
 	float *vertices;
 	unsigned int *indices;
@@ -77,7 +54,8 @@ int drawCircle(unsigned int shaderProgram, unsigned int numTriangles, unsigned i
 		return 1;
 	}
 
-	generateCircleVertices(&vertices, &indices, &verticesSize, &indicesSize, numTriangles);
+	generateCircleVertices(&vertices, &indices, &verticesSize, &indicesSize, numTriangles, 
+													posX, posY, radius);
 
 	printf("float vertices[] = {\n");
 	for (unsigned int i = 0; i <= numTriangles; i++) {

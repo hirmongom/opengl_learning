@@ -7,5 +7,6 @@
 #include <stdio.h>
 
 int initShaderProgram(unsigned int *shaderProgram);
+int setupProjectionMatrix(unsigned int shaderProgram, int width, int height);
 
 #endif

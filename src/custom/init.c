@@ -1,20 +1,24 @@
 #include "custom/init.h"
 
+
 /**************************************************************************************************/
-static void errorCallback(int error, const char* description) {
+static void errorCallback(int error, const char* description) 
+{
 	fprintf(stderr, "Error %d: %s\n", error, description);
 }
 
 
 /**************************************************************************************************/
-static void framebufferSizeCallback(UNUSED GLFWwindow *window, int width, int height) {
+static void framebufferSizeCallback(UNUSED GLFWwindow *window, int width, int height) 
+{
 	glViewport(0, 0, width, height);
 }
 
 
 /**************************************************************************************************/
 static void keyCallback(GLFWwindow* window, int key, UNUSED int scancode, int action, 
-UNUSED int mods) {
+UNUSED int mods) 
+{
 	switch(key) {
 		case GLFW_KEY_ESCAPE:
 			if (action == GLFW_PRESS)
@@ -28,7 +32,8 @@ UNUSED int mods) {
 
 
 /**************************************************************************************************/
-static void mouseButtonCallback(GLFWwindow* window, int button, int action, UNUSED int mods) {
+static void mouseButtonCallback(GLFWwindow* window, int button, int action, UNUSED int mods) 
+{
 	if (action == GLFW_PRESS) {
 		switch(button) {
 			case GLFW_MOUSE_BUTTON_LEFT:
@@ -43,7 +48,8 @@ static void mouseButtonCallback(GLFWwindow* window, int button, int action, UNUS
 
 
 /**************************************************************************************************/
-int createWindow(GLFWwindow **window, int width, int height) {
+int createWindow(GLFWwindow **window, int width, int height) 
+{
 	if (glfwInit() == GLFW_FALSE) {
 		fprintf(stderr, "Failed to initialize GLFW\n");
 		return 1;

@@ -8,7 +8,8 @@
 #include <math.h>
 #include <stdio.h>
 
-int drawTriangle(void);
-int drawCircle(unsigned int shaderProgram, unsigned int numTriangles, unsigned int wireframe);
+int drawCircle(unsigned int shaderProgram, unsigned int numTriangles, 
+								unsigned int posX, unsigned int posY, float radius, 
+								unsigned int wireframe);
 
 #endif

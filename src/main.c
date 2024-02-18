@@ -12,7 +12,8 @@
 
 
 /**************************************************************************************************/
-int main(void) {
+int main(void) 
+{
 	GLFWwindow *window;
 	unsigned int shaderProgram;
 
@@ -22,10 +23,12 @@ int main(void) {
 	if (initShaderProgram(&shaderProgram) != 0) {
 		exit(EXIT_FAILURE);
 	}
+	setupProjectionMatrix(shaderProgram, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	drawCircle(shaderProgram, 45, 1);
+	drawCircle(shaderProgram, 45, (float)WINDOW_WIDTH / 2, (float)WINDOW_HEIGHT / 2, 100, 1);
 
 	while(!glfwWindowShouldClose(window)) {
 		glfwSwapBuffers(window);
