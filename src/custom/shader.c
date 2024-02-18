@@ -74,12 +74,18 @@ int setupProjectionMatrix(unsigned int shaderProgram, int width, int height)
 	float bottom = 0.0f;
 	float top = (float)height;
 
-	// Calculate orthographic projection matrix
 	float projectionMatrix[16] = {
-			2.0f / (right - left), 0.0f, 0.0f, 0.0f,
-			0.0f, 2.0f / (top - bottom), 0.0f, 0.0f,
-			0.0f, 0.0f, -1.0f, 0.0f,
-			-(right + left) / (right - left), -(top + bottom) / (top - bottom), 0.0f, 1.0f
+		// Scale factors for x, y, and z axes (right - left), (top - bottom), and z-axis clipping planes
+		2.0f / (right - left), 0.0f, 0.0f, 0.0f,
+		
+		// No skewing for the x-axis, scale factor for y-axis, and clipping planes for the z-axis
+		0.0f, 2.0f / (top - bottom), 0.0f, 0.0f,
+		
+		// No scaling or skewing for the z-axis, but set near clipping plane to -1
+		0.0f, 0.0f, -1.0f, 0.0f,
+		
+		// Translation factors for the x and y axes, set z-axis clipping planes, and set w-axis
+		-(right + left) / (right - left), -(top + bottom) / (top - bottom), 0.0f, 1.0f
 	};
 
 	int projectionLocation = glGetUniformLocation(shaderProgram, "projection");

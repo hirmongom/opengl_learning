@@ -1,4 +1,11 @@
-#include "custom/input.h"
+#include "custom/event.h"
+
+/**************************************************************************************************/
+inline void windowResize() 
+{
+	setupProjectionMatrix(programStatus.shaderProgram, programStatus.windowWidth, 
+												programStatus.windowHeight);
+}
 
 
 /**************************************************************************************************/

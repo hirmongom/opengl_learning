@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "custom/input.h"
+#include "custom/event.h"
+#include "custom/status.h"
 
 int createWindow(GLFWwindow **window, int width, int height);
 

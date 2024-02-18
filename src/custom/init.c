@@ -2,6 +2,14 @@
 
 
 /**************************************************************************************************/
+ProgramStatus programStatus = {
+	1920,					/* Window Width */
+	1080,					/* Window Height */
+	0,						/* Shader Program */
+};
+
+
+/**************************************************************************************************/
 static void errorCallback(int error, const char* description) 
 {
 	fprintf(stderr, "Error %d: %s\n", error, description);
@@ -11,6 +19,8 @@ static void errorCallback(int error, const char* description)
 /**************************************************************************************************/
 static void framebufferSizeCallback(UNUSED GLFWwindow *window, int width, int height) 
 {
+	programStatus.windowWidth = width;
+	programStatus.windowHeight = height;
 	glViewport(0, 0, width, height);
 }
 
@@ -58,6 +68,9 @@ int createWindow(GLFWwindow **window, int width, int height)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	programStatus.windowWidth = width;
+	programStatus.windowHeight = height;
 
 	*window = glfwCreateWindow(width, height, "OpenGL Test", NULL, NULL);
 	if (!(*window)) {

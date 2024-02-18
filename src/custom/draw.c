@@ -43,6 +43,7 @@ int drawCircle(unsigned int shaderProgram, unsigned int numTriangles,
 unsigned int posX, unsigned int posY, float radius, 
 unsigned int wireframe) 
 {
+	fprintf(stdout, "Drawing on %d * %d\n", posX, posY);
 	unsigned int VAO, VBO, EBO;
 	float *vertices;
 	unsigned int *indices;
@@ -57,17 +58,18 @@ unsigned int wireframe)
 	generateCircleVertices(&vertices, &indices, &verticesSize, &indicesSize, numTriangles, 
 													posX, posY, radius);
 
-	printf("float vertices[] = {\n");
-	for (unsigned int i = 0; i <= numTriangles; i++) {
-		printf("\t%f, %f, %f,\n", vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
-	}
-	printf("};\n");
+	/* Debug: */
+	// printf("float vertices[] = {\n");
+	// for (unsigned int i = 0; i <= numTriangles; i++) {
+	// 	printf("\t%f, %f, %f,\n", vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
+	// }
+	// printf("};\n");
 
-	printf("unsigned int indices[] = {\n");
-	for (unsigned int i = 0; i < numTriangles * 3; i += 3) {
-		printf("\t%d, %d, %d,\n", indices[i], indices[i + 1], indices[i + 2]);
-	}
-	printf("};\n");
+	// printf("unsigned int indices[] = {\n");
+	// for (unsigned int i = 0; i < numTriangles * 3; i += 3) {
+	// 	printf("\t%d, %d, %d,\n", indices[i], indices[i + 1], indices[i + 2]);
+	// }
+	// printf("};\n");
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);

@@ -6,9 +6,10 @@
 #include "custom/init.h"
 #include "custom/shader.h"
 #include "custom/draw.h"
+#include "custom/status.h"
 
-#define 	WINDOW_WIDTH 		1920
-#define 	WINDOW_HEIGHT 	1080
+#define 	WINDOW_WIDTH 		720
+#define 	WINDOW_HEIGHT 	480
 
 
 /**************************************************************************************************/
@@ -19,18 +20,21 @@ int main(void)
 
 	if (createWindow(&window, WINDOW_WIDTH, WINDOW_HEIGHT) != 0) {
 		exit(EXIT_FAILURE);
-	} 
+	}
 	if (initShaderProgram(&shaderProgram) != 0) {
 		exit(EXIT_FAILURE);
 	}
 	setupProjectionMatrix(shaderProgram, WINDOW_WIDTH, WINDOW_HEIGHT);
+	programStatus.shaderProgram = shaderProgram;
 
-
+	
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-	drawCircle(shaderProgram, 45, (float)WINDOW_WIDTH / 2, (float)WINDOW_HEIGHT / 2, 100, 1);
-
 	while(!glfwWindowShouldClose(window)) {
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		drawCircle(shaderProgram, 45, (float)programStatus.windowWidth / 2, 
+							(float)programStatus.windowHeight / 2, 100, 1);
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
