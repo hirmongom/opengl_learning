@@ -43,7 +43,7 @@ int drawCircle(unsigned int shaderProgram, unsigned int numTriangles,
 unsigned int posX, unsigned int posY, float radius, 
 unsigned int wireframe) 
 {
-	fprintf(stdout, "Drawing on %d * %d\n", posX, posY);
+	// fprintf(stdout, "Drawing on %d * %d\n", posX, posY);
 	unsigned int VAO, VBO, EBO;
 	float *vertices;
 	unsigned int *indices;

@@ -93,5 +93,8 @@ int createWindow(GLFWwindow **window, int width, int height)
 	glfwSetKeyCallback(*window, keyCallback);
 	glfwSetMouseButtonCallback(*window, mouseButtonCallback);
 
+	const char *version = glfwGetVersionString();
+	fprintf(stdout, "Running on OpenGL version %s\n", version);
+
 	return 0;
 }
