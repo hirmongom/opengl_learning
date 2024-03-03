@@ -8,9 +8,6 @@
 #include "custom/draw.h"
 #include "custom/status.h"
 
-#define 	WINDOW_WIDTH 		720
-#define 	WINDOW_HEIGHT 	480
-
 
 /**************************************************************************************************/
 int main(void) 
@@ -18,13 +15,13 @@ int main(void)
 	GLFWwindow *window;
 	unsigned int shaderProgram;
 
-	if (createWindow(&window, WINDOW_WIDTH, WINDOW_HEIGHT) != 0) {
+	if (createWindow(&window) != 0) {
 		exit(EXIT_FAILURE);
 	}
 	if (initShaderProgram(&shaderProgram) != 0) {
 		exit(EXIT_FAILURE);
 	}
-	setupProjectionMatrix(shaderProgram, WINDOW_WIDTH, WINDOW_HEIGHT);
+	setupProjectionMatrix(shaderProgram);
 	programStatus.shaderProgram = shaderProgram;
 
 	

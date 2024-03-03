@@ -10,6 +10,6 @@
 #include "custom/event.h"
 #include "custom/status.h"
 
-int createWindow(GLFWwindow **window, int width, int height);
+int createWindow(GLFWwindow **window);
 
 #endif

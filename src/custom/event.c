@@ -1,10 +1,10 @@
 #include "custom/event.h"
 
+
 /**************************************************************************************************/
 inline void windowResize() 
 {
-	setupProjectionMatrix(programStatus.shaderProgram, programStatus.windowWidth, 
-												programStatus.windowHeight);
+	setupProjectionMatrix(programStatus.shaderProgram);
 }
 
 

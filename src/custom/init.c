@@ -3,10 +3,13 @@
 
 /**************************************************************************************************/
 ProgramStatus programStatus = {
-	1920,					/* Window Width */
-	1080,					/* Window Height */
+	0,						/* Window Width */
+	0,						/* Window Height */
 	0,						/* Shader Program */
 };
+
+static GLFWmonitor *monitor;
+static const GLFWvidmode *mode;
 
 
 /**************************************************************************************************/
@@ -58,7 +61,7 @@ static void mouseButtonCallback(GLFWwindow* window, int button, int action, UNUS
 
 
 /**************************************************************************************************/
-int createWindow(GLFWwindow **window, int width, int height) 
+int createWindow(GLFWwindow **window) 
 {
 	if (glfwInit() == GLFW_FALSE) {
 		fprintf(stderr, "Failed to initialize GLFW\n");
@@ -69,10 +72,15 @@ int createWindow(GLFWwindow **window, int width, int height)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	programStatus.windowWidth = width;
-	programStatus.windowHeight = height;
-
-	*window = glfwCreateWindow(width, height, "OpenGL Test", NULL, NULL);
+	monitor = glfwGetPrimaryMonitor();
+	mode = glfwGetVideoMode(monitor);
+	
+	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+	glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+	glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+	
+	*window = glfwCreateWindow(mode->width, mode->height, "OpenGL Test", monitor, NULL);
 	if (!(*window)) {
 		fprintf(stderr, "Failed to create window\n");
 		glfwTerminate();
@@ -86,7 +94,10 @@ int createWindow(GLFWwindow **window, int width, int height)
 		return 1;
 	}
 
-	glViewport(0, 0, width, height);
+	programStatus.windowWidth = mode->width;
+	programStatus.windowHeight = mode->height;
+
+	glViewport(0, 0, mode->width, mode->height);
 	
 	glfwSetErrorCallback(errorCallback);
 	glfwSetFramebufferSizeCallback(*window, framebufferSizeCallback);

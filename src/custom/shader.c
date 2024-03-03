@@ -65,14 +65,14 @@ int initShaderProgram(unsigned int *shaderProgram)
 
 
 /**************************************************************************************************/
-int setupProjectionMatrix(unsigned int shaderProgram, int width, int height) 
+int setupProjectionMatrix(unsigned int shaderProgram) 
 {
 	glUseProgram(shaderProgram);
 	
 	float left = 0.0f;
-	float right = (float)width;
+	float right = (float)programStatus.windowWidth;
 	float bottom = 0.0f;
-	float top = (float)height;
+	float top = (float)programStatus.windowHeight;
 
 	float projectionMatrix[16] = {
 		// Scale factors for x, y, and z axes (right - left), (top - bottom), and z-axis clipping planes
