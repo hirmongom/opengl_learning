@@ -4,16 +4,23 @@
 /**************************************************************************************************/
 inline void windowResize() 
 {
-	setupProjectionMatrix(programStatus.shaderProgram);
+	setupProjectionMatrix(*programStatus.shaderProgram);
 }
 
 
 /**************************************************************************************************/
 inline void leftMouseButtonPress(GLFWwindow *window) 
 {
-	double xpos, ypos;
-	glfwGetCursorPos(window, &xpos, &ypos);
-	fprintf(stdout, "Left mouse button clicked at (%f, %f)\n", xpos, ypos);
+	unsigned int triangleCount = 21;
+	unsigned int radius = 100;
+	unsigned int VAO;
+	double posX, posY;
+
+	glfwGetCursorPos(window, &posX, &posY);
+	fprintf(stdout, "Left mouse button clicked at (%f, %f)\n", posX, posY);
+
+	createCircle(triangleCount, posX, posY, radius, &VAO);
+	addObjectToScene(&VAO, triangleCount);
 }
 
 

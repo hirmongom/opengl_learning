@@ -8,7 +8,9 @@
 #include <stdio.h>
 
 #include "custom/event.h"
+#include "custom/scene.h"
 #include "custom/status.h"
+
 
 int createWindow(GLFWwindow **window);
 

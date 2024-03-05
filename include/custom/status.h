@@ -4,7 +4,7 @@
 typedef struct {
 	int windowWidth;
 	int windowHeight;
-	unsigned int shaderProgram;
+	unsigned int *shaderProgram;
 } ProgramStatus;
 
 extern ProgramStatus programStatus;

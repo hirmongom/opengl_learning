@@ -104,8 +104,13 @@ int createWindow(GLFWwindow **window)
 	glfwSetKeyCallback(*window, keyCallback);
 	glfwSetMouseButtonCallback(*window, mouseButtonCallback);
 
+	if (initScene() != 0) {
+		fprintf(stderr, "Error: Failed to initialize scene\n");
+		return 1;
+	};
+
 	const char *version = glfwGetVersionString();
-	fprintf(stdout, "Running on OpenGL version %s\n", version);
+	fprintf(stdout, "Using OpenGL version %s\n", version);
 
 	return 0;
 }

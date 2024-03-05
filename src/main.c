@@ -3,9 +3,10 @@
 
 #include <stdlib.h>
 
-#include "custom/init.h"
-#include "custom/shader.h"
 #include "custom/draw.h"
+#include "custom/init.h"
+#include "custom/scene.h"
+#include "custom/shader.h"
 #include "custom/status.h"
 
 
@@ -22,15 +23,19 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 	setupProjectionMatrix(shaderProgram);
-	programStatus.shaderProgram = shaderProgram;
+	programStatus.shaderProgram = &shaderProgram;
 
-	
+	unsigned int VAO1, VAO2;
+	createCircle(21, 1000, 1000, 100, &VAO1);
+	createCircle(21, 2000, 1500, 200, &VAO2);
+
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	while(!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		drawCircle(shaderProgram, 45, (float)programStatus.windowWidth / 2, 
-							(float)programStatus.windowHeight / 2, 100, 1);
+		renderScene();
+		drawObject(&shaderProgram, &VAO1, 21, 0);
+		drawObject(&shaderProgram, &VAO2, 21, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

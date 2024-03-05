@@ -6,6 +6,8 @@
 
 #include <stdio.h>
 
+#include "custom/draw.h"
+#include "custom/scene.h"
 #include "custom/shader.h"
 #include "custom/status.h"
 

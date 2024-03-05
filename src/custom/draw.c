@@ -37,36 +37,32 @@ unsigned int posX, unsigned int posY, float radius)
 	return 0;
 }
 
-
 /**************************************************************************************************/
-int drawCircle(unsigned int shaderProgram, unsigned int numTriangles, 
-unsigned int posX, unsigned int posY, float radius, 
-unsigned int wireframe) 
+int createCircle(unsigned int triangleCount, unsigned int posX, unsigned int posY,
+unsigned int radius, unsigned int *outVAO)
 {
-	// fprintf(stdout, "Drawing on %d * %d\n", posX, posY);
 	unsigned int VAO, VBO, EBO;
 	float *vertices;
 	unsigned int *indices;
 	size_t verticesSize, indicesSize;
 
-	/* For later use */
-	if (numTriangles % 3 != 0) {
+	if (triangleCount % 3 != 0) {
 		fprintf(stderr, "Error: Invalid number of triangles\n");
 		return 1;
 	}
 
-	generateCircleVertices(&vertices, &indices, &verticesSize, &indicesSize, numTriangles, 
+	generateCircleVertices(&vertices, &indices, &verticesSize, &indicesSize, triangleCount, 
 													posX, posY, radius);
 
 	/* Debug: */
 	// printf("float vertices[] = {\n");
-	// for (unsigned int i = 0; i <= numTriangles; i++) {
+	// for (unsigned int i = 0; i <= triangleCount; i++) {
 	// 	printf("\t%f, %f, %f,\n", vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]);
 	// }
 	// printf("};\n");
 
 	// printf("unsigned int indices[] = {\n");
-	// for (unsigned int i = 0; i < numTriangles * 3; i += 3) {
+	// for (unsigned int i = 0; i < triangleCount * 3; i += 3) {
 	// 	printf("\t%d, %d, %d,\n", indices[i], indices[i + 1], indices[i + 2]);
 	// }
 	// printf("};\n");
@@ -89,22 +85,27 @@ unsigned int wireframe)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	/* Draw */
-	if (wireframe) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-	
-	glUseProgram(shaderProgram);
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, numTriangles * 3, GL_UNSIGNED_INT, 0);
 
 	/* Clear */
 	free(vertices);
 	free(indices);
 
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
+	*outVAO = VAO;
+	return 0;
+}
+
+
+/**************************************************************************************************/
+int drawObject(unsigned int *shaderProgram, unsigned int *VAO, unsigned int triangleCount,
+unsigned int wireframe)
+{
+	if (wireframe) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	
+	glUseProgram(*shaderProgram);
+	glBindVertexArray(*VAO);
+	glDrawElements(GL_TRIANGLES, triangleCount * 3, GL_UNSIGNED_INT, 0);
 
 	return 0;
 }

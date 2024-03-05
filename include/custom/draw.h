@@ -8,8 +8,11 @@
 #include <math.h>
 #include <stdio.h>
 
-int drawCircle(unsigned int shaderProgram, unsigned int numTriangles, 
-								unsigned int posX, unsigned int posY, float radius, 
-								unsigned int wireframe);
+#include "status.h"
+
+int createCircle(unsigned int triangleCount, unsigned int posX, unsigned int posY,
+								unsigned int radius, unsigned int *outVAO);
+int drawObject(unsigned int *shaderProgram, unsigned int *VAO, unsigned int triangleCount,
+							unsigned int wireframe);
 
 #endif
